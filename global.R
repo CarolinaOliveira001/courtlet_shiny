@@ -3,4 +3,4 @@ library(dplyr)
 library(ggplot2)
 library(tidyverse)
 
-data("courtlet")
+data("court_data")
