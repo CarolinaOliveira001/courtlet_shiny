@@ -1,5 +1,7 @@
 server <- function(session, input, output) {
   
+  updateSelectizeInput(session, 'case_name_selected', choices = court_data$name, server = TRUE)
+  
   filtered_data <- reactive(
     court_data %>%
       filter(name %in% input$case_name_selected)
@@ -11,10 +13,10 @@ server <- function(session, input, output) {
     selectInput("my_thing", "Pick a thing:", things)
   })
   
-  final_selected_data <- reactive(
+  final_selected_data <- eventReactive(input$run_aggregation, {
     filtered_data() %>% 
       filter(first_party %in% input$my_thing)
-  )
+  })
   
   output$party_text <- renderText({
     first_party <- toString((final_selected_data() %>% 
@@ -35,15 +37,15 @@ server <- function(session, input, output) {
   })
   
   output$question_text <- renderText({
-    print(toString(clean_text(final_selected_data(), "question")[1,1]))
+    toString(clean_text(final_selected_data(), "question")[1,1])
   })
   
   output$facts_text <- renderText({
-    print(toString(clean_text(final_selected_data(), "facts")[1,1]))
+    toString(clean_text(final_selected_data(), "facts")[1,1])
   })
   
   output$conclusion_text <- renderText({
-    print(toString(clean_text(final_selected_data(), "conclusion")[1,1]))
+    toString(clean_text(final_selected_data(), "conclusion")[1,1])
   })
   
   output$winner_text <- renderText({
@@ -57,7 +59,7 @@ server <- function(session, input, output) {
         select("second_party"))[1, 1])
     }
     
-    print(paste("Hence the party winner is:", winner_name, ""))
+    paste("Hence the party winner is:", winner_name, "")
   })
   
   output$vote_plot <- renderPlot({

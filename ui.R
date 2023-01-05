@@ -7,22 +7,11 @@ ui <- function(request){
       
       sidebarPanel(
         selectizeInput("case_name_selected", "Select the name of the court case:",
-                       choices=court_data$name,
-                       multiple = FALSE,
-                       selected = c("Roe v. Wade"),
-                       options = list(
-                         plugins = list("remove_button"),
-                         create = TRUE,
-                         persist = FALSE # keep created choices in dropdown
-                       )
+                       choices=NULL
         ),
-        hr(),
         uiOutput("my_thing"),
-        #table_subset <- tableOutput("table_subset"),
-        #conditionalPanel(
-          #condition = "input.case_name_selected == 'custom'",
-          #sliderInput("breakCount", "Break Count", min = 1, max = 50, value = 10)
-        #),
+        actionButton(inputId = "run_aggregation",
+                     label = "Click here to run aggregation"),
         hr(),
         helpText("Original data from Kaggle")
       ),
@@ -30,26 +19,33 @@ ui <- function(request){
       mainPanel(
         h1("Supreme court cases in USA", align = "center"),
         h4("Parties involved"), 
-        textOutput("party_text"),
+        textOutput("party_text")%>% 
+          withLoader(loader = "loader10"),
         hr(),
         h4("Lawyers involved"), 
-        textOutput("lawyers_text"),
+        textOutput("lawyers_text") %>% 
+          withLoader(loader = "loader10"),
         hr(),
         h4("Judges involved"), 
-        textOutput("judges_text"),
+        textOutput("judges_text") %>% 
+          withLoader(loader = "loader10"),
         hr(),
         h4("Question"), 
-        textOutput("question_text"),
+        textOutput("question_text") %>% 
+          withLoader(loader = "loader10"),
         hr(),
         h4("Facts"), 
-        textOutput("facts_text"),
+        textOutput("facts_text") %>% 
+          withLoader(loader = "loader10"),
         hr(),
         h4("Conclusion"), 
-        textOutput("conclusion_text"),
-        textOutput("winner_text"),
+        textOutput("conclusion_text") %>% 
+          withLoader(loader = "loader10"),
+        textOutput("winner_text") %>% 
+          withLoader(loader = "loader10"),
         hr(),
-        
-        plotOutput("vote_plot")
+        plotOutput("vote_plot") %>% 
+          withLoader(loader = "loader10")
       )
     )
   )
