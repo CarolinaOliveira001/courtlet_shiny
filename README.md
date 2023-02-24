@@ -24,7 +24,7 @@ There might be some packages missing to run this app smoothly. So if not yet don
 install.packages(c("dplyr", "ggplot2", "shinycustomloader", "tidyverse"))
 ```
 
-Also my R-package is needed. For further information about the package, visit <a href="url">https://github.com/CarolinaOliveira001/courtlet</a>:
+Also my R-package is needed. For further information about the package, visit <a href="url">https://github.com/CarolinaOliveira001/courtlet</a>. After running the code below to your R-console, you can run Step 3 on last time.
 
 ```
 install.packages("devtools") 
